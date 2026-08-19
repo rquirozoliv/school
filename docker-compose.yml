@@ -1,0 +1,43 @@
+# Uso exclusivo para DESARROLLO LOCAL.
+# En GCP, MySQL se instala nativamente en la misma VM (ver DEPLOY.md),
+# no se usa este compose en produccion (la VM e2-micro Always Free
+# tiene muy poca RAM para correr Docker + MySQL + JVM comodamente).
+
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: courses-api-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: courses_db
+      MYSQL_USER: courses_user
+      MYSQL_PASSWORD: courses_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot_pass"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    container_name: courses-api-app
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/courses_db?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: courses_user
+      SPRING_DATASOURCE_PASSWORD: courses_pass
+      JWT_SECRET: local-dev-secret-change-me-please-0123456789
+
+volumes:
+  mysql_data:
