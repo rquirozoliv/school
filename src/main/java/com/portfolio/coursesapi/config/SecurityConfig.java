@@ -34,7 +34,7 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers("/h2-console", "/h2-console/**", "/error");
+                .requestMatchers("/h2-console", "/h2-console/**", "/swagger-ui/index.html", "/swagger-ui/index.html/**", "/error");
     }
 
     @Bean
@@ -44,6 +44,7 @@ public class SecurityConfig {
                 new ServletRegistrationBean<>(new JakartaWebServlet());
 
         registration.addUrlMappings("/h2-console/*");
+        registration.addUrlMappings("/swagger-ui/index.html/*");
 
         return registration;
     }
@@ -58,6 +59,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/token").permitAll()
                         .requestMatchers("/h2-console", "/h2-console/**").permitAll()
+                        .requestMatchers("/swagger-ui/index.html", "/swagger-ui/index.html/**").permitAll()
                         .requestMatchers("/error").permitAll() // Añadido aquí también por seguridad
                         .requestMatchers("/actuator/health", "/actuator/health/**").permitAll()
                         .anyRequest().authenticated()

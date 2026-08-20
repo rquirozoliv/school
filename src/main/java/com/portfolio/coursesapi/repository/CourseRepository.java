@@ -10,4 +10,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     Optional<Course> findByCodeIgnoreCase(String code);
 
     boolean existsByCodeIgnoreCase(String code);
+    // Spring Boot implementa este método automáticamente por ti con solo escribirlo
+    Optional<Course> findByCode(String code);
 }

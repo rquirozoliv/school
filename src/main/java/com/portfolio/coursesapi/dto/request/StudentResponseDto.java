@@ -1,11 +1,9 @@
-package com.portfolio.coursesapi.dto.response;
-
-import com.portfolio.coursesapi.dto.request.CourseSummaryDto;
+package com.portfolio.coursesapi.dto.request;
 
 import java.time.LocalDate;
 import java.util.Set;
 
-public record StudentResponse(
+public record StudentResponseDto(
         Long id,
         String rut,
         String name,
@@ -14,4 +12,3 @@ public record StudentResponse(
         LocalDate enrollmentDate,
         Set<CourseSummaryDto> courses
 ) {}
-

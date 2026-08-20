@@ -12,7 +12,7 @@ public final class CourseMapper {
 
     /** Referencia reutilizable como Function<Course, CourseResponse>, apta para Page::map o Stream::map. */
     public static final Function<Course, CourseResponse> TO_RESPONSE =
-            course -> new CourseResponse(course.getId(), course.getName(), course.getCode());
+            course -> new CourseResponse(course.getId(), course.getTitle(), course.getCode());
 
     private CourseMapper() {
         // utility class
@@ -20,7 +20,7 @@ public final class CourseMapper {
 
     public static Course toEntity(CourseCreateRequest request) {
         return Course.builder()
-                .name(request.name().trim())
+                .title(request.name().trim())
                 .code(normalizeCode(request.code()))
                 .build();
     }
@@ -30,7 +30,7 @@ public final class CourseMapper {
         Optional.ofNullable(request.name())
                 .filter(name -> !name.isBlank())
                 .map(String::trim)
-                .ifPresent(course::setName);
+                .ifPresent(course::setTitle);
 
         Optional.ofNullable(request.code())
                 .filter(code -> !code.isBlank())

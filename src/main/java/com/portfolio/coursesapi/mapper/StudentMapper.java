@@ -1,66 +1,57 @@
 package com.portfolio.coursesapi.mapper;
 
+import com.portfolio.coursesapi.dto.request.CourseSummaryDto;
 import com.portfolio.coursesapi.dto.request.StudentCreateRequest;
+import com.portfolio.coursesapi.dto.request.StudentResponseDto;
 import com.portfolio.coursesapi.dto.request.StudentUpdateRequest;
 import com.portfolio.coursesapi.dto.response.StudentResponse;
 import com.portfolio.coursesapi.entity.Course;
 import com.portfolio.coursesapi.entity.Student;
 import com.portfolio.coursesapi.validation.rut.RutUtils;
 
+import java.util.Collections;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public final class StudentMapper {
 
-    /** Referencia reutilizable como Function<Student, StudentResponse>, apta para Page::map o Stream::map. */
-    public static final Function<Student, StudentResponse> TO_RESPONSE =
-            student -> new StudentResponse(
-                    student.getId(),
-                    student.getRut(),
-                    student.getName(),
-                    student.getLastname(),
-                    student.getAge(),
-                    CourseMapper.TO_RESPONSE.apply(student.getCourse())
-            );
-
+    // Constructor privado para evitar la instanciación de una clase utilitaria
     private StudentMapper() {
-        // utility class
-    }
-
-    public static Student toEntity(StudentCreateRequest request, Course course) {
-        return Student.builder()
-                .rut(RutUtils.normalize(request.rut()))
-                .name(request.name().trim())
-                .lastname(request.lastname().trim())
-                .age(request.age())
-                .course(course)
-                .build();
+        throw new UnsupportedOperationException("Esta es una clase utilitaria y no puede ser instanciada.");
     }
 
     /**
-     * Aplica sobre 'student' solo los campos presentes en el request.
-     * 'newCourse' ya debe venir resuelto (o null si no se solicito cambio de curso).
+     * Expresión Lambda funcional e inmutable para transformar un Student (Entidad) a un StudentResponseDto.
+     * Previene la recursión cíclica transformando las relaciones pesadas a DTOs planos.
      */
-    public static void applyUpdate(Student student, StudentUpdateRequest request, Course newCourse) {
-        Optional.ofNullable(request.rut())
-                .filter(rut -> !rut.isBlank())
-                .map(RutUtils::normalize)
-                .ifPresent(student::setRut);
+    public static final Function<Student, StudentResponseDto> TO_RESPONSE = student -> {
+        if (student == null) {
+            return null;
+        }
 
-        Optional.ofNullable(request.name())
-                .filter(name -> !name.isBlank())
-                .map(String::trim)
-                .ifPresent(student::setName);
+        // Mapeo defensivo y seguro de la colección de cursos utilizando programación funcional
+        Set<CourseSummaryDto> courseDtos = Optional.ofNullable(student.getCourses())
+                .orElse(Collections.emptySet())
+                .stream()
+                .map(course -> new CourseSummaryDto(
+                        course.getId(),
+                        course.getCode(),
+                        course.getTitle(),
+                        course.getCredits(),
+                        course.getDescription()
+                ))
+                .collect(Collectors.toUnmodifiableSet()); // Garantiza la inmutabilidad de la colección mapeada
 
-        Optional.ofNullable(request.lastname())
-                .filter(lastname -> !lastname.isBlank())
-                .map(String::trim)
-                .ifPresent(student::setLastname);
-
-        Optional.ofNullable(request.age())
-                .ifPresent(student::setAge);
-
-        Optional.ofNullable(newCourse)
-                .ifPresent(student::setCourse);
-    }
+        return new StudentResponseDto(
+                student.getId(),
+                student.getRut(),
+                student.getName(),
+                student.getEmail(), // Incluido para cumplir con la integridad del JSON de origen
+                student.getAge(),
+                student.getEnrollmentDate(), // Incluido para mantener la consistencia del contrato moderno
+                courseDtos
+        );
+    };
 }
