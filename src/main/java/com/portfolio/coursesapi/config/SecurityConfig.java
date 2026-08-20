@@ -3,6 +3,9 @@ package com.portfolio.coursesapi.config;
 import com.portfolio.coursesapi.security.JwtAuthenticationEntryPoint;
 import com.portfolio.coursesapi.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.h2.server.web.JakartaWebServlet;
+import org.h2.server.web.WebServlet;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -32,6 +35,17 @@ public class SecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
                 .requestMatchers("/h2-console", "/h2-console/**", "/error");
+    }
+
+    @Bean
+    public ServletRegistrationBean<JakartaWebServlet> h2ConsoleServletRegistration() {
+        // Usamos 'JakartaWebServlet' en lugar de 'WebServlet' para compatibilidad con Spring Boot 3
+        ServletRegistrationBean<JakartaWebServlet> registration =
+                new ServletRegistrationBean<>(new JakartaWebServlet());
+
+        registration.addUrlMappings("/h2-console/*");
+
+        return registration;
     }
 
     @Bean
