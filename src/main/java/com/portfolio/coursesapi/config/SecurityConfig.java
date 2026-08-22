@@ -5,6 +5,7 @@ import com.portfolio.coursesapi.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.h2.server.web.JakartaWebServlet;
 import org.h2.server.web.WebServlet;
+import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,20 +35,13 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers("/h2-console", "/h2-console/**", "/swagger-ui/index.html", "/swagger-ui/index.html/**", "/error");
+                .requestMatchers("/h2-console",
+                        "/swagger-ui", "/swagger", "/swagger-ui/index.html", "/swagger-ui/index.html**",
+                        "/swagger-ui/**", "/swagger/v1/swagger.json", "/v3/api-docs", "/v3/api-docs**",
+                        "/swagger/v1/swagger.json**", "/swagger-config", "/swagger-config**", "/h2-console/**",
+                        "/error");
     }
 
-    @Bean
-    public ServletRegistrationBean<JakartaWebServlet> h2ConsoleServletRegistration() {
-        // Usamos 'JakartaWebServlet' en lugar de 'WebServlet' para compatibilidad con Spring Boot 3
-        ServletRegistrationBean<JakartaWebServlet> registration =
-                new ServletRegistrationBean<>(new JakartaWebServlet());
-
-        registration.addUrlMappings("/h2-console/*");
-        registration.addUrlMappings("/swagger-ui/index.html/*");
-
-        return registration;
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
@@ -59,7 +53,15 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/token").permitAll()
                         .requestMatchers("/h2-console", "/h2-console/**").permitAll()
-                        .requestMatchers("/swagger-ui/index.html", "/swagger-ui/index.html/**").permitAll()
+                        .requestMatchers("/swagger-ui/index.html", "/swagger","/swagger-ui/index.html**","/swagger/v1/**",
+                                "/swagger/v1/swagger.json",
+                                "/v3/api-docs",
+                                "/v3/api-docs**",
+                                "/swagger/v1/swagger.json**",
+                                "/swagger-config",
+                                "/swagger-config**",
+                                "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html",
+                                "/swagger-ui/**").permitAll()
                         .requestMatchers("/error").permitAll() // Añadido aquí también por seguridad
                         .requestMatchers("/actuator/health", "/actuator/health/**").permitAll()
                         .anyRequest().authenticated()
