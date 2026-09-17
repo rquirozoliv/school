@@ -21,6 +21,8 @@ public final class CourseMapper {
     public static Course toEntity(CourseCreateRequest request) {
         return Course.builder()
                 .title(request.name().trim())
+                .credits(1)
+                .description(request.name().trim())
                 .code(normalizeCode(request.code()))
                 .build();
     }

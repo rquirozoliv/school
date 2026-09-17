@@ -1,4 +1,16 @@
 {
+  "teachers": [
+    { "id": 1, "name": "profe 1", "email": "alejandro.gomez@email.com","enrollmentDate": "2026-01-15", "courseIds": [1, 2] },
+    { "id": 2, "name": "profe 2", "email": "beatriz.m@email.com", "enrollmentDate": "2026-01-16", "courseIds": [2, 6] },
+    { "id": 3, "name": "profe 3", "email": "carlos.rod@email.com", "enrollmentDate": "2026-01-18", "courseIds": [1, 3, 8] },
+    { "id": 4, "name": "profe 4", "email": "diana.p@email.com", "enrollmentDate": "2026-01-20", "courseIds": [4, 7] },
+    { "id": 5, "name": "profe 5", "email": "eduardo.m@email.com", "enrollmentDate": "2026-01-22", "courseIds": [2, 4, 9] },
+    { "id": 6, "name": "profe 6", "email": "fer.luna@email.com", "enrollmentDate": "2026-01-25", "courseIds": [1, 5] },
+    { "id": 7, "name": "profe 7", "email": "gabriel.soto@email.com", "enrollmentDate": "2026-01-26", "courseIds": [3, 10] },
+    { "id": 8, "name": "profe 8", "email": "helena.c@email.com", "enrollmentDate": "2026-01-28", "courseIds": [5, 10] },
+    { "id": 9, "name": "profe 9", "email": "ignacio.r@email.com", "enrollmentDate": "2026-02-01", "courseIds": [2, 3] },
+    { "id": 10,"name": "profe 10", "email": "julia.b@email.com", "enrollmentDate": "2026-02-02", "courseIds": [4, 6, 7] }
+  ],
   "courses": [
     { "id": 1, "code": "CS-101", "title": "Introducción a Java", "credits": 4, "description": "Fundamentos de programación orientada a objetos usando Java." },
     { "id": 2, "code": "CS-202", "title": "Spring Boot Fundamental", "credits": 5, "description": "Desarrollo de aplicaciones web y APIs REST con Spring Boot." },
@@ -12,20 +24,20 @@
     { "id": 10, "code": "CS-220", "title": "Metodologías Ágiles", "credits": 2, "description": "Gestión de proyectos de software utilizando Scrum y Kanban." }
   ],
   "students": [
-    { "id": 1, "name": "Alejandro Gómez", "email": "alejandro.gomez@email.com", "age": 21, "enrollmentDate": "2026-01-15", "courseIds": [1, 2] },
-    { "id": 2, "name": "Beatriz Mendoza", "email": "beatriz.m@email.com", "age": 23, "enrollmentDate": "2026-01-16", "courseIds": [2, 6] },
-    { "id": 3, "name": "Carlos Rodríguez", "email": "carlos.rod@email.com", "age": 20, "enrollmentDate": "2026-01-18", "courseIds": [1, 3, 8] },
-    { "id": 4, "name": "Diana Palacios", "email": "diana.p@email.com", "age": 22, "enrollmentDate": "2026-01-20", "courseIds": [4, 7] },
-    { "id": 5, "name": "Eduardo Martínez", "email": "eduardo.m@email.com", "age": 25, "enrollmentDate": "2026-01-22", "courseIds": [2, 4, 9] },
-    { "id": 6, "name": "Fernanda Luna", "email": "fer.luna@email.com", "age": 19, "enrollmentDate": "2026-01-25", "courseIds": [1, 5] },
-    { "id": 7, "name": "Gabriel Soto", "email": "gabriel.soto@email.com", "age": 24, "enrollmentDate": "2026-01-26", "courseIds": [3, 10] },
-    { "id": 8, "name": "Helena Castro", "email": "helena.c@email.com", "age": 22, "enrollmentDate": "2026-01-28", "courseIds": [5, 10] },
-    { "id": 9, "name": "Ignacio Ruiz", "email": "ignacio.r@email.com", "age": 21, "enrollmentDate": "2026-02-01", "courseIds": [2, 3] },
-    { "id": 10, "name": "Julia Benítez", "email": "julia.b@email.com", "age": 26, "enrollmentDate": "2026-02-02", "courseIds": [4, 6, 7] },
-    { "id": 11, "name": "Kevin Delgado", "email": "kevin.d@email.com", "age": 20, "enrollmentDate": "2026-02-03", "courseIds": [1, 8] },
-    { "id": 12, "name": "Laura Villalba", "email": "laura.v@email.com", "age": 23, "enrollmentDate": "2026-02-05", "courseIds": [6, 9] },
-    { "id": 13, "name": "Mateo Herrera", "email": "mateo.h@email.com", "age": 22, "enrollmentDate": "2026-02-08", "courseIds": [3, 7, 8] },
-    { "id": 14, "name": "Natalia Ortega", "email": "natalia.o@email.com", "age": 19, "enrollmentDate": "2026-02-10", "courseIds": [5] },
-    { "id": 15, "name": "Óscar Flores", "email": "oscar.f@email.com", "age": 27, "enrollmentDate": "2026-02-12", "courseIds": [4, 9, 10] }
+    { "id": 1,"name": "Alejandro Gómez", "email": "alejandro.gomez@email.com", "age": 21, "enrollmentDate": "2026-01-15", "courseIds": [1, 2], "rut": "11.111.111-1" },
+    { "id": 2, "name": "Beatriz Mendoza", "email": "beatriz.m@email.com", "age": 23, "enrollmentDate": "2026-01-16", "courseIds": [2, 6], "rut": "11.111.222-2"},
+    { "id": 3,"name": "Carlos Rodríguez", "email": "carlos.rod@email.com", "age": 20, "enrollmentDate": "2026-01-18", "courseIds": [1, 3, 8] ,"rut": "11.111.333-3"},
+    { "id": 4,"name": "Diana Palacios", "email": "diana.p@email.com", "age": 22, "enrollmentDate": "2026-01-20", "courseIds": [4, 7],"rut": "11.111.444-4" },
+    { "id": 5,"name": "Eduardo Martínez", "email": "eduardo.m@email.com", "age": 25, "enrollmentDate": "2026-01-22", "courseIds": [2, 4, 9],"rut": "11.111.151-5" },
+    { "id": 6,"name": "Fernanda Luna", "email": "fer.luna@email.com", "age": 19, "enrollmentDate": "2026-01-25", "courseIds": [1, 5],"rut": "11.111.166-6" },
+    { "id": 7,"name": "Gabriel Soto", "email": "gabriel.soto@email.com", "age": 24, "enrollmentDate": "2026-01-26", "courseIds": [3, 10],"rut": "11.111.177-7" },
+    { "id": 8,"name": "Helena Castro", "email": "helena.c@email.com", "age": 22, "enrollmentDate": "2026-01-28", "courseIds": [5, 10],"rut": "11.111.888-8" },
+    { "id": 9,"name": "Ignacio Ruiz", "email": "ignacio.r@email.com", "age": 21, "enrollmentDate": "2026-02-01", "courseIds": [2, 3],"rut": "11.111.911-9" },
+    { "id": 10,"name": "Julia Benítez", "email": "julia.b@email.com", "age": 26, "enrollmentDate": "2026-02-02", "courseIds": [4, 6, 7],"rut": "11.111.011-1" },
+    { "id": 11,"name": "Kevin Delgado", "email": "kevin.d@email.com", "age": 20, "enrollmentDate": "2026-02-03", "courseIds": [1, 8],"rut": "11.111.101-1" },
+    { "id": 12,"name": "Laura Villalba", "email": "laura.v@email.com", "age": 23, "enrollmentDate": "2026-02-05", "courseIds": [6, 9],"rut": "11.121.211-1" },
+    { "id": 13,"name": "Mateo Herrera", "email": "mateo.h@email.com", "age": 22, "enrollmentDate": "2026-02-08", "courseIds": [3, 7, 8],"rut": "11.311.311-1" },
+    { "id": 14,"name": "Natalia Ortega", "email": "natalia.o@email.com", "age": 19, "enrollmentDate": "2026-02-10", "courseIds": [5,7],"rut": "11.411.141-1" },
+    { "id": 15,"name": "Óscar Flores", "email": "oscar.f@email.com", "age": 27, "enrollmentDate": "2026-02-12", "courseIds": [4, 9, 10],"rut": "11.515.111-1" }
   ]
 }

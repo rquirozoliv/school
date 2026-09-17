@@ -4,5 +4,6 @@ import java.util.List;
 
 public record MockDataWrapperDto(
         List<CourseMockDto> courses,
-        List<StudentMockDto> students
+        List<StudentMockDto> students,
+        List<TeacherMockDto> teachers
 ) {}

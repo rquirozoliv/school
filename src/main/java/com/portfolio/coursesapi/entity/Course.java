@@ -49,4 +49,8 @@ public class Course {
     @Builder.Default
     @ManyToMany(mappedBy = "courses")
     private Set<Student> students = new HashSet<>();
+
+    @Builder.Default
+    @ManyToMany(mappedBy = "courses")
+    private Set<Teacher> teachers = new HashSet<>();
 }

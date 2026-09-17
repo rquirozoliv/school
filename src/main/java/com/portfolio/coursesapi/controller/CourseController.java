@@ -38,7 +38,7 @@ public class CourseController {
     }
 
     /** GET /courses/all -> lista completa sin paginar. */
-    @GetMapping("/all")
+    @GetMapping("/")
     public ResponseEntity<List<CourseResponse>> findAllNoPaging() {
         return ResponseEntity.ok(courseService.findAllNoPaging());
     }

@@ -76,4 +76,8 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(status).body(error);
     }
+
+    public static ResourceNotFoundException notFound(Long id) {
+        return new ResourceNotFoundException("Alumno con id " + id + " no fue encontrado");
+    }
 }

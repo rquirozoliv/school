@@ -8,6 +8,7 @@ import com.portfolio.coursesapi.dto.response.StudentResponse;
 import com.portfolio.coursesapi.entity.Course;
 import com.portfolio.coursesapi.entity.Student;
 import com.portfolio.coursesapi.exception.DuplicateResourceException;
+import com.portfolio.coursesapi.exception.GlobalExceptionHandler;
 import com.portfolio.coursesapi.exception.InvalidReferenceException;
 import com.portfolio.coursesapi.exception.ResourceNotFoundException;
 import com.portfolio.coursesapi.mapper.StudentMapper;
@@ -57,7 +58,7 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponseDto findById(Long id) {
         return studentRepository.findById(id)
                 .map(StudentMapper.TO_RESPONSE)
-                .orElseThrow(() -> notFound(id));
+                .orElseThrow(() -> GlobalExceptionHandler.notFound(id));
     }
 
     @Override
@@ -96,7 +97,7 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponseDto update(Long id, StudentUpdateRequest request) {
         // 1. Obtener la entidad administrada o lanzar excepción
         Student student = studentRepository.findById(id)
-                .orElseThrow(() -> notFound(id));
+                .orElseThrow(() -> GlobalExceptionHandler.notFound(id));
 
         // 2. Validar unicidad del RUT si se intenta modificar
         if (request.rut() != null && !request.rut().isBlank()) {
@@ -139,15 +140,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public void delete(Long id) {
-        Student student = studentRepository.findById(id).orElseThrow(() -> notFound(id));
+        Student student = studentRepository.findById(id).orElseThrow(() -> GlobalExceptionHandler.notFound(id));
 
         // Desvincular de forma bidireccional en memoria antes de borrar para evitar violaciones de FK de Hibernate
         student.getCourses().forEach(course -> course.getStudents().remove(student));
 
         studentRepository.delete(student);
-    }
-
-    private ResourceNotFoundException notFound(Long id) {
-        return new ResourceNotFoundException("Alumno con id " + id + " no fue encontrado");
     }
 }
